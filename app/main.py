@@ -1,11 +1,14 @@
 from typing import Literal
 
 from fastapi import FastAPI
-from pydantic import BaseModel
+from pydantic import BaseModel,Field
 
 
 class HealthResponse(BaseModel):
-    status: Literal["ok"]
+    status: Literal["ok"] = Field(
+        description="Current availability status of the API.",
+        examples=["ok"],
+    )
 
 
 app = FastAPI(
