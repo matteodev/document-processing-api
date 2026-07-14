@@ -16,8 +16,13 @@ class DocumentResponse(BaseModel):
     content_type: str
     status: Literal["uploaded"]
 
-MAX_FILE_SIZE = 10 * 1024 * 1024
-PDF_SIGNATURE = b"%PDF-"
+from app.services.document_validator import (
+    MAX_FILE_SIZE,
+    DocumentTooLargeError,
+    EmptyDocumentError,
+    InvalidPdfError,
+    validate_pdf,
+)
 
 
 app = FastAPI(
@@ -42,7 +47,6 @@ def health_check() -> HealthResponse:
     status_code=status.HTTP_201_CREATED,
     tags=["Documents"],
 )
-
 async def upload_document(
     file: UploadFile = File(description="PDF document to process"),
 ) -> DocumentResponse:
@@ -54,23 +58,23 @@ async def upload_document(
 
     content = await file.read(MAX_FILE_SIZE + 1)
 
-    if not content:
+    try:
+        validate_pdf(content)
+    except EmptyDocumentError as error:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="The uploaded file is empty.",
-        )
-
-    if len(content) > MAX_FILE_SIZE:
+            detail=str(error),
+        ) from error
+    except DocumentTooLargeError as error:
         raise HTTPException(
             status_code=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE,
-            detail="The PDF cannot exceed 10 MB.",
-        )
-
-    if not content.startswith(PDF_SIGNATURE):
+            detail=str(error),
+        ) from error
+    except InvalidPdfError as error:
         raise HTTPException(
             status_code=status.HTTP_415_UNSUPPORTED_MEDIA_TYPE,
-            detail="The uploaded file does not contain a valid PDF signature.",
-        )
+            detail=str(error),
+        ) from error
 
     return DocumentResponse(
         id=uuid4(),
