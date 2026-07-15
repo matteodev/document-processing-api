@@ -69,7 +69,7 @@ tests/
 Clone the repository:
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/matteodev/document-processing-api
 cd document-processing-api
 ```
 
@@ -189,7 +189,7 @@ Il progetto nasce come percorso pratico e orientato a un caso reale per approfon
 Clonare il repository:
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/matteodev/document-processing-api
 cd document-processing-api
 ```
 
