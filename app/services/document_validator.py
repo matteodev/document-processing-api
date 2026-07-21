@@ -13,6 +13,7 @@ class DocumentTooLargeError(Exception):
 class InvalidPdfError(Exception):
     pass
 
+
 def validate_pdf(content: bytes) -> None:
     if not content:
         raise EmptyDocumentError("The uploaded file is empty.")
