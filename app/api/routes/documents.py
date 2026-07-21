@@ -3,6 +3,9 @@ from uuid import uuid4
 from fastapi import APIRouter, File, HTTPException, UploadFile, status
 
 from app.schemas.document import DocumentResponse
+
+from app.services.document_storage import save_document
+
 from app.services.document_validator import (
     MAX_FILE_SIZE,
     DocumentTooLargeError,
@@ -51,9 +54,13 @@ async def upload_document(
             status_code=status.HTTP_415_UNSUPPORTED_MEDIA_TYPE,
             detail=str(error),
         ) from error
+    
+    # Salvataggio
+    document_id = uuid4()
+    save_document(content, document_id)
 
     return DocumentResponse(
-        id=uuid4(),
+        id=document_id,
         filename=file.filename or "unnamed.pdf",
         content_type=file.content_type,
         size_bytes=len(content),
