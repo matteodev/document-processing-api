@@ -21,6 +21,9 @@ The project is being developed as a practical, production-oriented path for lear
 - Automatic OpenAPI documentation
 - Unit tests with pytest
 - Modular separation between routes, schemas and services
+- Local PDF storage using UUID-based filenames
+- Isolated storage tests using pytest temporary directories
+- Code quality checks and formatting with Ruff
 
 ### Technology stack
 
@@ -110,6 +113,27 @@ http://127.0.0.1:8000/redoc
 uv run python -m pytest -v
 ```
 
+### Code quality
+
+Run the linter:
+
+```bash
+uv run ruff check .
+```
+
+Verify code formatting:
+
+```bash
+uv run ruff format --check .
+```
+
+Apply automatic formatting:
+
+```bash
+uv run ruff format .
+```
+
+
 ### Example response
 
 A successful PDF upload currently returns:
@@ -137,7 +161,6 @@ These checks are an initial validation layer and do not replace complete documen
 
 ### Roadmap
 
-- Local document persistence
 - PDF text extraction
 - Structured insurance-document data extraction
 - PostgreSQL integration
@@ -175,6 +198,9 @@ Il progetto nasce come percorso pratico e orientato a un caso reale per approfon
 - documentazione OpenAPI automatica;
 - unit test con pytest;
 - separazione modulare tra route, schemi e servizi.
+- salvataggio locale dei PDF con nomi basati su UUID;
+- test isolati dello storage tramite cartelle temporanee pytest;
+- controllo della qualità e formattazione del codice con Ruff.
 
 ### Endpoint disponibili
 
@@ -218,11 +244,32 @@ http://127.0.0.1:8000/docs
 uv run python -m pytest -v
 ```
 
+
+### Qualità del codice
+
+Controlla errori con ruff:
+
+```bash
+uv run ruff check .
+```
+
+Verifica la sintassi:
+
+```bash
+uv run ruff format --check .
+```
+
+Applica formattazione:
+
+```bash
+uv run ruff format .
+```
+
+
 ### Obiettivi futuri
 
 Le prossime fasi includeranno:
 
-- salvataggio dei documenti;
 - estrazione del testo dai PDF;
 - estrazione strutturata dei dati assicurativi;
 - integrazione con PostgreSQL;
