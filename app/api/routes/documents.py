@@ -1,3 +1,4 @@
+from typing import Annotated
 from uuid import uuid4
 
 from fastapi import APIRouter, File, HTTPException, UploadFile, status
@@ -24,7 +25,10 @@ router = APIRouter(
     status_code=status.HTTP_201_CREATED,
 )
 async def upload_document(
-    file: UploadFile = File(description="PDF document to process"),
+    file: Annotated[
+        UploadFile,
+        File(description="PDF document to process"),
+    ],
 ) -> DocumentResponse:
     """
     Upload a PDF document for processing.
