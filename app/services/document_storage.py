@@ -11,6 +11,11 @@ def save_document(
     document_id: UUID,
     storage_directory: Path = DOCUMENT_STORAGE_DIRECTORY,
 ) -> Path:
+    '''
+    Save a document to the specified storage directory.
+    If the storage directory does not exist, it will be created.
+    The document will be saved with the name "{document_id}.pdf".
+    '''
     storage_directory.mkdir(
         parents=True, # Crea anche eventuali cartelle superiori mancanti
         exist_ok=True, # Se esiste non da errori

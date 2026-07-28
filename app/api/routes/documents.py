@@ -29,6 +29,10 @@ router = APIRouter(
 async def upload_document(
     file: UploadFile = File(description="PDF document to process"),
 ) -> DocumentResponse:
+    '''
+    Upload a PDF document for processing.
+    Validates the document and saves it to the storage directory.
+    '''
     if file.content_type != "application/pdf":
         raise HTTPException(
             status_code=status.HTTP_415_UNSUPPORTED_MEDIA_TYPE,

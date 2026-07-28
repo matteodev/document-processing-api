@@ -15,6 +15,10 @@ class InvalidPdfError(Exception):
 
 
 def validate_pdf(content: bytes) -> None:
+    '''
+    Validate the uploaded PDF document.
+    Raises an exception if the document is empty, too large, or does not have a valid PDF signature.
+    '''
     if not content:
         raise EmptyDocumentError("The uploaded file is empty.")
 
