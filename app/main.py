@@ -2,7 +2,6 @@ from fastapi import FastAPI
 
 from app.api.routes import documents, health, info
 
-
 app = FastAPI(
     title="Document Processing API",
     description="API for uploading and processing structured documents.",

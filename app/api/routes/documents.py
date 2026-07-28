@@ -3,9 +3,7 @@ from uuid import uuid4
 from fastapi import APIRouter, File, HTTPException, UploadFile, status
 
 from app.schemas.document import DocumentResponse
-
 from app.services.document_storage import save_document
-
 from app.services.document_validator import (
     MAX_FILE_SIZE,
     DocumentTooLargeError,
@@ -13,7 +11,6 @@ from app.services.document_validator import (
     InvalidPdfError,
     validate_pdf,
 )
-
 
 router = APIRouter(
     prefix="/documents",
@@ -29,10 +26,10 @@ router = APIRouter(
 async def upload_document(
     file: UploadFile = File(description="PDF document to process"),
 ) -> DocumentResponse:
-    '''
+    """
     Upload a PDF document for processing.
     Validates the document and saves it to the storage directory.
-    '''
+    """
     if file.content_type != "application/pdf":
         raise HTTPException(
             status_code=status.HTTP_415_UNSUPPORTED_MEDIA_TYPE,
@@ -58,7 +55,7 @@ async def upload_document(
             status_code=status.HTTP_415_UNSUPPORTED_MEDIA_TYPE,
             detail=str(error),
         ) from error
-    
+
     # Salvataggio
     document_id = uuid4()
     save_document(content, document_id)

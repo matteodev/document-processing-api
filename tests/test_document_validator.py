@@ -10,9 +10,9 @@ from app.services.document_validator import (
 
 
 def test_empty_document_is_rejected() -> None:
-    '''
+    """
     Test that an empty document is rejected by the validator.
-    '''
+    """
     with pytest.raises(
         EmptyDocumentError,
         match="The uploaded file is empty.",
@@ -21,26 +21,27 @@ def test_empty_document_is_rejected() -> None:
 
 
 def test_valid_pdf_is_accepted() -> None:
-    '''
+    """
     Test that a valid PDF document is accepted by the validator.
-    '''
+    """
     validate_pdf(b"%PDF-1.7")
 
 
 def test_invalid_pdf_signature_is_rejected() -> None:
-    '''
+    """
     Test that a document with an invalid PDF signature is rejected by the validator.
-    '''
+    """
     with pytest.raises(
         InvalidPdfError,
         match="The uploaded file does not contain a valid PDF signature.",
     ):
         validate_pdf(b"This is not a PDF")
 
+
 def test_document_larger_than_limit_is_rejected() -> None:
-    '''
+    """
     Test that a document larger than the maximum allowed size is rejected by the validator.
-    '''
+    """
     content = b"x" * (MAX_FILE_SIZE + 1)
 
     with pytest.raises(

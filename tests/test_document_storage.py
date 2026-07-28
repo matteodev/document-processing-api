@@ -5,9 +5,9 @@ from app.services.document_storage import save_document
 
 
 def test_document_is_saved(tmp_path: Path) -> None:
-    '''
+    """
     Test that a document is saved correctly to the specified storage directory.
-    '''
+    """
     content = b"%PDF-1.7 test content"
     document_id = uuid4()
 
